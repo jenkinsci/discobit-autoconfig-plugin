@@ -1,0 +1,80 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'http://repo.jenkins-ci.org/releases/'
+        }
+    }
+    dependencies {
+        classpath 'org.jenkins-ci.tools:gradle-jpi-plugin:0.7.1'
+    }
+}
+
+apply plugin: 'org.jenkins-ci.jpi'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "1.12"
+}
+
+jenkinsPlugin {
+    // version of Jenkins core this plugin depends on, must be 1.420 or later
+    coreVersion = '1.420'
+
+    // short name of the plugin, defaults to the project name without trailing '-plugin'
+    shortName = 'discobit-autoconfig'
+
+    // human-readable name of plugin                                               
+    displayName = 'discoBit AutoConfig plugin'
+
+    // URL for plugin on Jenkins wiki or elsewhere
+    url = 'http://discobit.com'
+    // url = 'http://wiki.jenkins-ci.org/display/JENKINS/SomePluginPage'
+
+    // plugin URL on GitHub, optional
+    gitHubUrl = 'https://github.com/jenkins-ci/discobit-autoconfig-plugin'              
+
+    // use the plugin class loader before the core class loader, defaults to false
+    pluginFirstClassLoader = false
+
+    // optional list of package prefixes that your plugin doesn't want to see from core 
+    //maskClasses = 'groovy.grape org.apache.commons.codec'
+
+   // optional version number from which this plugin release is configuration-compatible
+    compatibleSinceVersion = '0.9'
+
+     // set the directory from which the development server will run, defaults to 'work'
+    workDir = file('/tmp/jenkins')
+
+    // URL used to deploy the plugin, defaults to the value shown
+    repoUrl = 'http://maven.jenkins-ci.org:8081/content/repositories/releases'
+
+    // URL used to deploy snapshots of the plugin, defaults to the value shown
+    snapshotRepoUrl = 'http://maven.jenkins-ci.org:8081/content/repositories/snapshots'
+
+    // the developers section is optional, and corresponds to the POM developers section
+    developers {
+        developer {
+            id 'jsaade'
+            name 'Jens Saade'
+            email 'jens@v3rticle.com'
+        }
+    }                           
+}
+
+group = 'com.v3rticle.oss'
+version = '0.9'
+description = 'discoBit AutoConfig Plugin for Jenkins - http://discobit.com'
+
+repositories{
+    maven { 
+        url 'http://artifactory.v3rticle.com/artifactory/public' 
+        credentials {
+            username 'public'
+            password '{DESede}WU05iM8+zel9LItPYpDnTg=='
+        }
+    }
+}
+
+dependencies{
+    compile 'com.v3rticle.oss:discobit-client-java:0.7.1'
+}
