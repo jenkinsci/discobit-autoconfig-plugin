@@ -61,7 +61,7 @@ jenkinsPlugin {
 }
 
 group = 'com.v3rticle.oss'
-version = '0.9'
+version = '0.9.1'
 description = 'discoBit AutoConfig Plugin for Jenkins - http://discobit.com'
 
 repositories{
